@@ -6,9 +6,9 @@ services:
     - docker
 
 before_install:
-  - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
+    - echo $DOCKER_PASSWORD | docker login --username $DOCKER_USERNAME --password-stdin
 
 before_script: pip install docker-compose
 
 script:
-    - docker-compose -f docker-compose.stack.yml run app sh -c "python manage.py test && flake8"
+    - docker-compose -f docker-compose.stack.yml run app sh -c "python manage.py wait_for_db && python manage.py test && flake8"
